@@ -8,8 +8,16 @@ const app = express()
 
 const server = http.createServer(app)
 
-new SockerServer(server)
+const io = new SockerServer(server,{
+    cors:{
+        origin: '*'
+    }
+})
 
 app.use(cors())
 
-app.listen(PORT)
+io.on('connection', (socket)=>{
+    console.log(socket)
+})
+
+server.listen(PORT)
